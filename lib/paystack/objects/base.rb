@@ -35,6 +35,8 @@ class PaystackBaseObject
 
 	def self.initPostRequest(paystackObj, url, data = {}, json=false ) 
 		result = nil
+		pp url
+		pp data
     begin
 			if !json
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data,  :authorization  => "Bearer #{paystackObj.private_key}"
