@@ -40,12 +40,11 @@ class PaystackBaseObject
     begin
 			if !json
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data,  :authorization  => "Bearer #{paystackObj.private_key}"
-				pp response
 			else
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data.to_json,  :authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
-				pp response
-		
 			end
+
+			pp response
 			unless (response.code == 200 || response.code == 201)
 					raise PaystackServerError.new(response), "HTTP Code #{response.code}: #{response.body}"
 			end
