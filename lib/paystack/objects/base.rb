@@ -42,6 +42,7 @@ class PaystackBaseObject
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data.to_json,  :authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
 			end
 
+			pp response
 			unless (response.code == 200 || response.code == 201)
 					raise PaystackServerError.new(response), "HTTP Code #{response.code}: #{response.body}"
 			end
@@ -49,7 +50,6 @@ class PaystackBaseObject
 			unless(result['status'] != 0 )
 				raise PaystackServerError.new(response), "Server Message: #{result['message']}"
 			end
-
 		rescue JSON::ParserError => jsonerr
 			raise PaystackServerError.new(response) , "Invalid result data. Could not parse JSON response body \n #{jsonerr.message}"
 
