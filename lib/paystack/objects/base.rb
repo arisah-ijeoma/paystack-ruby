@@ -12,10 +12,12 @@ class PaystackBaseObject
 
 	protected
 	# =>Static methods
-	def self.initGetRequest(paystackObj, url) 
+	def self.initGetRequest(paystackObj, url)
+		pp paystackObj, url
 		result = nil
 		begin
 			response = RestClient.get "#{API::BASE_URL}#{url}" , :Authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
+			pp JSON.parse(response.body)
 			unless (response.code == 200 || response.code == 201)
 					raise PaystackServerError.new(response), "HTTP Code #{response.code}: #{response.body}"
 			end
@@ -37,15 +39,11 @@ class PaystackBaseObject
 		result = nil
     begin
 			if !json
-				pp "#{API::BASE_URL}#{url}", data, "Bearer #{paystackObj.private_key}"
 				response = RestClient.post "#{API::BASE_URL}#{url}" , data,  :authorization  => "Bearer #{paystackObj.private_key}"
-				pp 'in pay', response
-				pp 'in pay2', response.inspect
 			else
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data.to_json,  :authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
 			end
 
-			pp response.inspect
 			unless (response.code == 200 || response.code == 201)
 					raise PaystackServerError.new(response), "HTTP Code #{response.code}: #{response.body}"
 			end
