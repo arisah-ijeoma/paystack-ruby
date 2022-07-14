@@ -37,6 +37,7 @@ class PaystackBaseObject
 		result = nil
     begin
 			if !json
+				pp "#{API::BASE_URL}#{url}", data, "Bearer #{paystackObj.private_key}"
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data,  :authorization  => "Bearer #{paystackObj.private_key}"
 				pp 'in pay', response.inspect
 			else
