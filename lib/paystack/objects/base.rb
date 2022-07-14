@@ -34,11 +34,11 @@ class PaystackBaseObject
 	end
 
 	def self.initPostRequest(paystackObj, url, data = {}, json=false )
-		pp 'I get here', paystackObj, url, data, json
 		result = nil
     begin
 			if !json
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data,  :authorization  => "Bearer #{paystackObj.private_key}"
+				pp 'in pay', response.inspect
 			else
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data.to_json,  :authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
 			end
