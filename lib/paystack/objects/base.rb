@@ -13,7 +13,7 @@ class PaystackBaseObject
 	protected
 	# =>Static methods
 	def self.initGetRequest(paystackObj, url)
-		pp paystackObj, url
+		pp 'm'*100, paystackObj, url
 		result = nil
 		begin
 			response = RestClient.get "#{API::BASE_URL}#{url}" , :Authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
