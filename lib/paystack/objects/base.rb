@@ -36,6 +36,7 @@ class PaystackBaseObject
 	end
 
 	def self.initPostRequest(paystackObj, url, data = {}, json=false )
+		pp 'm'*100, paystackObj, url
 		result = nil
     begin
 			if !json
@@ -44,10 +45,14 @@ class PaystackBaseObject
 				response =  RestClient.post "#{API::BASE_URL}#{url}" , data.to_json,  :authorization  => "Bearer #{paystackObj.private_key}", :content_type => :json, :accept => :json
 			end
 
+			pp response.code
+			pp '---'
+
 			unless (response.code == 200 || response.code == 201)
 					raise PaystackServerError.new(response), "HTTP Code #{response.code}: #{response.body}"
 			end
 			result = JSON.parse(response.body)
+			pp result
 			unless(result['status'] != 0 )
 				raise PaystackServerError.new(response), "Server Message: #{result['message']}"
 			end
