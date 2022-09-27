@@ -36,7 +36,7 @@ class PaystackBaseObject
 	end
 
 	def self.initPostRequest(paystackObj, url, data = {}, json=false )
-		pp 'm'*100, paystackObj, url
+		pp 'm'*100, paystackObj, url, json, data
 		result = nil
     begin
 			if !json
